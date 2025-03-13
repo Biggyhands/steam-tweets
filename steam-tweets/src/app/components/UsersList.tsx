@@ -1,38 +1,8 @@
-"use client";
-
-import React from "react";
-import { useQuery } from "@tanstack/react-query";
-
-interface Props {
-  users: any[];
-}
-
-const UsersList: React.FC<Props> = ({ users }) => {
-  const {
-    data: cachedUsers,
-    isLoading,
-    isError,
-    error,
-    refetch,
-  } = useQuery({
-    queryKey: ["users"],
-    queryFn: () => Promise.resolve(users),
-    initialData: users,
-    enabled: false,
-  });
-
-  if (isLoading) {
-    return <div>Loading users...</div>;
-  }
-
-  if (isError) {
-    return <div>Error fetching users: {(error as Error).message}</div>;
-  }
-
+export default function UsersList({ data }) {
   return (
     <div>
       <ul className="space-y-2 grid grid-cols-1 md:grid-cols-3 gap-4">
-        {cachedUsers?.map((user) => (
+        {data?.map((user) => (
           <li
             key={user.id}
             className="bg-[#2c3441] p-2 flex items-center cursor-pointer hover:shadow-xl   transition-shadow duration-200"
@@ -52,6 +22,4 @@ const UsersList: React.FC<Props> = ({ users }) => {
       </ul>
     </div>
   );
-};
-
-export default UsersList;
+}

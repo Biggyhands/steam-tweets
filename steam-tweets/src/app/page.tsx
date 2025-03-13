@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
 import Login from "./components/Login";
+import { useEffect } from "react";
 import { useUser } from "./context/UserContext";
 import { useRouter } from "next/navigation";
 
@@ -13,9 +13,11 @@ export default function Home() {
     setUsername(name);
   };
 
-  if (username && username.length > 0) {
-    router.push("/users");
-  }
+  useEffect(() => {
+    if (username && username.length > 0) {
+      router.push("/users");
+    }
+  }, [username, router]);
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-[#1b2838] flex-col">
