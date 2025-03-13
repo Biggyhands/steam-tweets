@@ -9,24 +9,24 @@ export default function Navegation() {
   return (
     <nav className="flex items-center text-sm">
       <Link
-        href="/"
+        href="/users"
         className={`px-3 py-1 hover:text-gray-100 ${
-          pathname === "/"
+          pathname === "/users"
             ? "font-semibold underline underline-offset-4 decoration-[#66c0f0] decoration-2 text-[#66c0f0]"
             : ""
         }`}
       >
-        TIENDA
+        USERS
       </Link>
       <Link
-        href="/tienda"
+        href="/posts"
         className={`px-3 py-1 text-gray-200 hover:text-white ${
           pathname === "/tienda"
             ? "font-semibold underline underline-offset-4 decoration-[#66c0f0] decoration-2 text-[#66c0f0]"
             : ""
         }`}
       >
-        ACTIVIDAD
+        POSTS
       </Link>
       <Link
         href="/about"

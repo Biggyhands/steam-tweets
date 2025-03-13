@@ -1,12 +1,11 @@
 "use client";
 
 import Login from "./components/Login";
-import { useEffect } from "react";
-import { useUser } from "./context/UserContext";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const { username, setUsername } = useUser();
+  const [username, setUsername] = useState();
   const router = useRouter();
 
   const handleLogin = (name: string) => {
