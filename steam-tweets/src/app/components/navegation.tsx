@@ -20,8 +20,8 @@ export default function Navegation() {
       </Link>
       <Link
         href="/posts"
-        className={`px-3 py-1 text-gray-200 hover:text-white ${
-          pathname === "/tienda"
+        className={`px-3 py-1 hover:text-gray-100 ${
+          pathname === "/posts"
             ? "font-semibold underline underline-offset-4 decoration-[#66c0f0] decoration-2 text-[#66c0f0]"
             : ""
         }`}

@@ -14,3 +14,23 @@ export const getPosts = async (
 
   return pagedResults;
 };
+
+export const getPostById = async (id: number): Promise<any> => {
+  const response = await fetch(
+    `https://jsonplaceholder.typicode.com/posts/${id}`
+  );
+  if (!response.ok) {
+    throw new Error("Failed to fetch post");
+  }
+  return response.json();
+};
+
+export const getCommentsByPostId = async (postId: number): Promise<any> => {
+  const response = await fetch(
+    `https://jsonplaceholder.typicode.com/posts/${postId}/comments`
+  );
+  if (!response.ok) {
+    throw new Error("Failed to fetch comments");
+  }
+  return response.json();
+};
