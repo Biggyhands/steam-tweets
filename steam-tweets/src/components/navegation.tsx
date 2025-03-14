@@ -29,7 +29,7 @@ export default function Navegation() {
         POSTS
       </Link>
       <Link
-        href="/about"
+        href="/"
         className={`px-3 py-1 text-gray-200 hover:text-white ${
           pathname === "/about"
             ? "font-semibold underline underline-offset-4 decoration-[#66c0f0] decoration-2 text-[#66c0f0]"
@@ -39,7 +39,7 @@ export default function Navegation() {
         ACERCA DE
       </Link>
       <Link
-        href="/soporte"
+        href="/"
         className={`px-3 py-1 text-gray-200 hover:text-white ${
           pathname === "/soporte"
             ? "font-semibold underline underline-offset-4 decoration-[#66c0f0] decoration-2 text-[#66c0f0]"

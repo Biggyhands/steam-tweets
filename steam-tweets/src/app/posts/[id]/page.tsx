@@ -63,7 +63,6 @@ export default function PostDetailPage() {
       const findAuthor: User = users.find(
         (user: User) => user.id === post.userId
       );
-      //console.log(findAuthor);
       if (findAuthor) {
         setAuthor(findAuthor.name);
       }
@@ -127,6 +126,11 @@ export default function PostDetailPage() {
               key={comment.id}
               className="bg-[#364e68] p-2 rounded-md text-sm"
             >
+              {isLoadingPost && (
+                <div className="w-12 h-12 flex items-center justify-center bg-[#171a21] mr-2">
+                  <span className="text-white text-lg font-bold">?</span>
+                </div>
+              )}
               <Image
                 src={`https://api.dicebear.com/9.x/pixel-art/jpg?seed=${comment.id}`}
                 alt="user avatar"
