@@ -30,21 +30,21 @@ This project utilizes the following technologies:
 
 Follow these steps to set up and run the project on your local environment.
 
-- Clone this repository to your local machine using:
+Clone this repository to your local machine using:
 
-**git clone https://github.com/Biggyhands/steam-tweets.git**
+- **git clone https://github.com/Biggyhands/steam-tweets.git**
 
-- Then, navigate to the project directory:
+Then, navigate to the project directory:
 
-**cd steam-tweets**
+- **cd steam-tweets**
 
-- Install the required dependencies with:
+Install the required dependencies with:
 
-**npm install**
+- **npm install**
 
-- Run the development server with:
+Run the development server with:
 
-**npm run dev**
+- **npm run dev**
 
 ## Technical Decisions and Considerations
 

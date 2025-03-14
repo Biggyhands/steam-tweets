@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { getPostById, getCommentsByPostId } from "@/lib/utils";
+import { getPostById, getCommentsByPostId, getUsers } from "@/lib/utils";
 import SkeletonLoadingPostDetail from "@/components/SkeletonLoadingPostsDetails";
 
 interface Comment {
@@ -24,6 +24,15 @@ export default function PostDetailPage() {
     queryKey: ["post", postId],
     queryFn: () => getPostById(postId),
     enabled: !!postId,
+  });
+
+  const {
+    data: users,
+    isLoading: loadingUsers,
+    isError: errorUsers,
+  } = useQuery({
+    queryKey: ["users"],
+    queryFn: getUsers,
   });
 
   const {
