@@ -5,6 +5,8 @@ import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { getPostById, getCommentsByPostId, getUsers } from "@/lib/utils";
 import SkeletonLoadingPostDetail from "@/components/SkeletonLoadingPostsDetails";
+import { User } from "@/lib/types/globals";
+import Image from "next/image";
 
 interface Comment {
   id: number;
@@ -27,15 +29,6 @@ export default function PostDetailPage() {
   });
 
   const {
-    data: users,
-    isLoading: loadingUsers,
-    isError: errorUsers,
-  } = useQuery({
-    queryKey: ["users"],
-    queryFn: getUsers,
-  });
-
-  const {
     data: comments,
     isLoading: isLoadingComments,
     isError: isErrorComments,
@@ -45,16 +38,34 @@ export default function PostDetailPage() {
     queryFn: () => getCommentsByPostId(postId),
     enabled: !!postId,
   });
+  const {
+    data: users,
+    isLoading: loadingUsers,
+    isError: errorUsers,
+  } = useQuery({
+    queryKey: ["users"],
+    queryFn: getUsers,
+  });
 
   const [newComment, setNewComment] = useState<string>("");
   const [localComments, setLocalComments] = useState<Comment[]>([]);
   const [userLogged, setUserLogged] = useState<string | undefined>();
+  const [author, setAuthor] = useState<string | undefined>();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedUser = localStorage.getItem("user_session");
       if (storedUser) {
         setUserLogged(storedUser);
+      }
+    }
+    if (post && users) {
+      const findAuthor: User = users.find(
+        (user: User) => user.id === post.userId
+      );
+      //console.log(findAuthor);
+      if (findAuthor) {
+        setAuthor(findAuthor.name);
       }
     }
     if (comments) {
@@ -92,12 +103,22 @@ export default function PostDetailPage() {
   return (
     <main className="min-h-screen bg-[#1b2838] text-white p-8">
       <div className="bg-[#2c3441] rounded-md p-4 max-w-2xl mx-auto">
-        {" "}
-        <h1 className="text-2xl text-blue-500 font-bold mb-2 text-start">
-          {post.title}
-        </h1>{" "}
-        <p>{post.userId}</p>
-        <p className="mb-4 text-sm">{post.body}</p>
+        <div className="flex gap-2 my-2">
+          <Image
+            className="rounded-xl aspect-square w-[50%] h-40"
+            src={`https://api.dicebear.com/9.x/pixel-art/jpg?seed=${post.userId}`}
+            alt="user avatar"
+            width={100}
+            height={100}
+          />
+          <div className="flex flex-col gap-2">
+            <h1 className="text-2xl text-blue-500 font-bold text-start">
+              {post.title}
+            </h1>{" "}
+            <p className="font-bold">{author}</p>
+            <p className="my-4 text-sm">{post.body}</p>
+          </div>
+        </div>
         <hr />
         <h2 className="text-xl font-bold mb-2">Comentarios</h2>
         <ul className="space-y-2 mb-4">
@@ -106,19 +127,19 @@ export default function PostDetailPage() {
               key={comment.id}
               className="bg-[#364e68] p-2 rounded-md text-sm"
             >
-              <div className="w-8 h-8 flex items-center justify-center bg-[#171a21] mr-2">
-                <span className="text-white text-lg font-bold">?</span>
-              </div>{" "}
+              <Image
+                src={`https://api.dicebear.com/9.x/pixel-art/jpg?seed=${comment.id}`}
+                alt="user avatar"
+                width={30}
+                height={30}
+              />
+
               {comment.body}
             </li>
           ))}
         </ul>
         <div className="flex flex-col items-stretch">
-          {" "}
-          <div className="w-8 h-8 flex items-center justify-center bg-[#171a21] mr-2">
-            <span className="text-white text-lg font-bold">?</span>
-          </div>
-          <h3 className="text-blue-400">{userLogged}</h3>
+          <h3 className="text-blue-400 my-2">{userLogged}</h3>
           <textarea
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}

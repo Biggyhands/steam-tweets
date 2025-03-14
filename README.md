@@ -48,4 +48,24 @@ Run the development server with:
 
 ## Technical Decisions and Considerations
 
+### Organization of the /app or /pages Folder
+
+We have chosen to organize our application as follows:
+
+- **Modular Structure:** The /pages folder is organized by routes, where each file or folder represents a URL in our application. This maintains a clear and predictable flow for how routes are created and makes maintenance easier.
+
+- **Components Structure:** Within each route, we separate related components into a logically hierarchical structure. For example, common components are placed in a components folder, which can be reused across different routes.
+
+- **Separation of Logic and Presentation:** We implement container components in the main pages that handle business logic and data, passing necessary props to smaller presentation components to keep the code clean and maintainable.
+
+### Logic Structure with TanStack (React Query)
+
+In this project, we leveraged **TanStack's React Query** to smartly manage data fetching and synchronization. Here's how and why it influenced our use of Client Components:
+
+- **Smart Data Handling:** React Query centralized our data fetching and caching, allowing us to retrieve and sync data seamlessly without bogging down our components with heavy state management.
+
+- **Client Components Focus:** By using Client Components, we could focus on interactivity and UI updates. Since React Query handles the heavy lifting of data synchronization and state updates, our components could remain lightweight and responsive.
+
+- **Interactivity and Real-time Updates:** The real power of using Client Components is evident with real-time UI updates. React Query’s hooks, like `useQuery` and `useMutation`, made it easy to show instant feedback to users, enhancing the interactive experience.
+
 ## Demo
