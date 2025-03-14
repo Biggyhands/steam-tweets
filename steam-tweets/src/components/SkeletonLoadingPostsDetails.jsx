@@ -1,6 +1,5 @@
-// app/components/SkeletonLoadingPostDetail.tsx
 import React from "react";
-import { Skeleton } from "../../components/ui/skeleton";
+import { Skeleton } from "./ui/skeleton";
 
 export default function SkeletonLoadingPostDetail() {
   return (

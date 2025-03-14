@@ -1,11 +1,10 @@
-// app/posts/[id]/page.tsx
 "use client";
 
 import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { getPostById, getCommentsByPostId } from "../utils/posts-api";
-import SkeletonLoadingPostDetail from "../../components/SkeletonLoadingPostsDetails";
+import { getPostById, getCommentsByPostId } from "@/lib/utils";
+import SkeletonLoadingPostDetail from "@/components/SkeletonLoadingPostsDetails";
 
 interface Comment {
   id: number;
@@ -40,8 +39,15 @@ export default function PostDetailPage() {
 
   const [newComment, setNewComment] = useState<string>("");
   const [localComments, setLocalComments] = useState<Comment[]>([]);
+  const [userLogged, setUserLogged] = useState<string | undefined>();
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedUser = localStorage.getItem("user_session");
+      if (storedUser) {
+        setUserLogged(storedUser);
+      }
+    }
     if (comments) {
       setLocalComments(comments);
     }
@@ -102,7 +108,7 @@ export default function PostDetailPage() {
           <div className="w-8 h-8 flex items-center justify-center bg-[#171a21] mr-2">
             <span className="text-white text-lg font-bold">?</span>
           </div>
-          <h3 className="text-blue-400">Usuario</h3>
+          <h3 className="text-blue-400">{userLogged}</h3>
           <textarea
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}

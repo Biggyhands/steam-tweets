@@ -2,10 +2,11 @@
 
 import React from "react";
 import Link from "next/link";
-import { getGameName } from "../helper/getGameName";
+import { getGameName } from "@/lib/helper/getGameName";
+import { Post } from "@/lib/types/globals";
 
 interface Props {
-  data: any[];
+  data: Post[];
 }
 
 export default function PostList({ data }: Props) {

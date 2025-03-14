@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import { TanstackProvider } from "./components/providers/Tanstack-provider.tsx";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { TanstackProvider } from "@/lib/providers/Tanstack-provider";
 import "./globals.css";
 
 export const metadata: Metadata = {

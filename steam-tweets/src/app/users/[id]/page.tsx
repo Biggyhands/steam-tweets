@@ -2,8 +2,9 @@
 
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import UserDetail from "../../components/UserDetail";
-import SkeletonLoadingDetail from "../../components/SkeletonLoadingDetail";
+import UserDetail from "@/components/UserDetail";
+import SkeletonLoadingDetail from "@/components/SkeletonLoadingDetail";
+import { usePathname } from "next/navigation";
 
 interface Props {
   params: { id: string };
@@ -20,7 +21,8 @@ const fetchUser = async (id: string) => {
 };
 
 export default function UserDetailPage({ params }: Props) {
-  const { id } = React.use(params);
+  const pathname = usePathname();
+  const id = pathname.split("/")[2];
 
   const {
     data: user,

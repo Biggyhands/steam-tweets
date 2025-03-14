@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getPosts } from "./utils/posts-api";
-import PostList from "../components/PostList";
-import SkeletonLoadingPosts from "../components/SkeletonLoadingPosts";
+import { getPosts } from "@/lib/utils";
+import PostList from "@/components/PostList";
+import SkeletonLoadingPost from "@/components/SkeletonLoadingPosts";
 import {
   Pagination,
   PaginationContent,
@@ -13,7 +13,9 @@ import {
   PaginationPrevious,
   PaginationNext,
 } from "@/components/ui/pagination";
-import { getGameName } from "../helper/getGameName";
+import { getGameName } from "@/lib/helper/getGameName";
+import { useSearchParams } from "next/navigation";
+import { Post } from "@/lib/types/globals";
 
 interface Props {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -21,8 +23,9 @@ interface Props {
 
 const itemsPerPage = 10;
 
-export default function PostsPage({ searchParams }: Props) {
-  const { page } = React.use(searchParams);
+export default function PostsPage() {
+  const searchParams = useSearchParams();
+  const page = searchParams.get("page");
   const currentPage = page ? Number(page) : 1;
   const [allPosts, setAllPosts] = useState<any[]>([]);
   const [gameName, setGameName] = useState<string>(getGameName());
@@ -46,13 +49,9 @@ export default function PostsPage({ searchParams }: Props) {
   const totalPosts = 100;
   const totalPages = Math.ceil(totalPosts / itemsPerPage);
 
-  if (isError) {
-    return <div>Error fetching posts: {(error as Error).message}</div>;
-  }
+  const posts: Post[] = allPosts[currentPage - 1] || [];
 
-  const posts = allPosts[currentPage - 1] || [];
-
-  const filteredPosts = posts.filter((post) =>
+  const filteredPosts = posts.filter((post: Post) =>
     post.title.toLowerCase().includes(filterText.toLowerCase())
   );
 
@@ -65,6 +64,10 @@ export default function PostsPage({ searchParams }: Props) {
   });
 
   const getLink = (p: number): string => `/posts?page=${p}`;
+
+  if (isError) {
+    return <div>Error fetching posts: {(error as Error).message}</div>;
+  }
 
   return (
     <main className="min-h-screen bg-[#1b2838] text-white p-8">
@@ -88,23 +91,19 @@ export default function PostsPage({ searchParams }: Props) {
         </select>
       </div>
 
-      {isLoading ? (
-        <SkeletonLoadingPosts />
-      ) : (
-        <PostList data={sortedPosts} gameName={gameName} />
-      )}
+      {isLoading ? <SkeletonLoadingPost /> : <PostList data={sortedPosts} />}
 
-      <Pagination>
+      <Pagination className="mt-4">
         <PaginationPrevious
           href={getLink(currentPage - 1)}
-          disabled={currentPage === 1}
+          isActive={currentPage === 1}
         />
         <PaginationContent>
           {Array.from({ length: totalPages }, (_, i) => (
             <PaginationItem key={i + 1}>
               <PaginationLink
                 href={getLink(i + 1)}
-                isactive={(i + 1 === currentPage).toString()}
+                isActive={i + 1 === currentPage}
               >
                 {i + 1}
               </PaginationLink>
@@ -113,7 +112,7 @@ export default function PostsPage({ searchParams }: Props) {
         </PaginationContent>
         <PaginationNext
           href={getLink(currentPage + 1)}
-          disabled={currentPage === totalPages}
+          isActive={currentPage === totalPages}
         />
       </Pagination>
     </main>
