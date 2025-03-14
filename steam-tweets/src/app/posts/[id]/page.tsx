@@ -87,6 +87,7 @@ export default function PostDetailPage() {
         <h1 className="text-2xl text-blue-500 font-bold mb-2 text-start">
           {post.title}
         </h1>{" "}
+        <p>{post.userId}</p>
         <p className="mb-4 text-sm">{post.body}</p>
         <hr />
         <h2 className="text-xl font-bold mb-2">Comentarios</h2>
