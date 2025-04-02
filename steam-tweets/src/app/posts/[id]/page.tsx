@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { getPostById, getCommentsByPostId, getUsers } from "@/lib/utils";
 import SkeletonLoadingPostDetail from "@/components/SkeletonLoadingPostsDetails";
@@ -12,14 +13,9 @@ interface Comment {
   body: string;
 }
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
-
-export default function PostDetailPage({ params }: PageProps) {
-  const postId = Number(params.id);
+export default function PostDetailPage() {
+  const { id } = useParams();
+  const postId = Number(id);
 
   const {
     data: post,
@@ -42,7 +38,6 @@ export default function PostDetailPage({ params }: PageProps) {
     queryFn: () => getCommentsByPostId(postId),
     enabled: !!postId,
   });
-
   const {
     data: users,
     isLoading: loadingUsers,
@@ -75,7 +70,7 @@ export default function PostDetailPage({ params }: PageProps) {
     if (comments) {
       setLocalComments(comments);
     }
-  }, [comments, post, users]);
+  }, [comments]);
 
   const handleAddComment = () => {
     const newCommentObj = {
