@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { TanstackProvider } from "@/lib/providers/Tanstack-provider";
 import "./globals.css";
+import { Suspense } from "react"; //needed for the usesearchparamshook
 
 export const metadata: Metadata = {
   title: "Steam Tweets",
@@ -21,13 +22,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <TanstackProvider>
-          <Header />
+        <Suspense fallback={<p>Loading...</p>}>
+          {/* needed for the usesearchparams hooke */}
+          <TanstackProvider>
+            <Header />
 
-          {children}
+            {children}
 
-          <Footer />
-        </TanstackProvider>
+            <Footer />
+          </TanstackProvider>
+        </Suspense>
       </body>
     </html>
   );

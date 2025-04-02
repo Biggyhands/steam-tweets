@@ -2,12 +2,15 @@ import React from "react";
 
 import DataItem from "./DataItem";
 import Link from "next/link";
+import { User } from "@/lib/types/globals"; //imported type
 
 interface UserDetailProps {
-  user: any;
+  /* user: any;  explicity any type*/
+  user: User;
 }
 
 export default function UserDetail({ user }: UserDetailProps) {
+  console.log("user", user);
   return (
     <div className="bg-[#2c3441] rounded-md p-4 max-w-md mx-auto">
       <div className="flex items-center mb-4">
@@ -21,7 +24,13 @@ export default function UserDetail({ user }: UserDetailProps) {
       </div>
 
       <div>
-        <DataItem label="ID" value={user.id} />
+        <DataItem
+          label="ID"
+          value={
+            user.id.toString()
+            /*id data type is number and DataItem componeent only receives string*/
+          }
+        />
         <DataItem label="Email" value={user.email} />
         <DataItem label="Teléfono" value={user.phone} />
         <DataItem label="Sitio Web" value={user.website} />

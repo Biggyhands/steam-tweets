@@ -6,9 +6,13 @@ import UserDetail from "@/components/UserDetail";
 import SkeletonLoadingDetail from "@/components/SkeletonLoadingDetail";
 import { usePathname } from "next/navigation";
 
-interface Props {
+/* interface Props {
   params: { id: string };
-}
+} */
+
+/*
+page props not needed in client component 
+*/
 
 const fetchUser = async (id: string) => {
   const response = await fetch(
@@ -20,7 +24,7 @@ const fetchUser = async (id: string) => {
   return response.json();
 };
 
-export default function UserDetailPage({ params }: Props) {
+export default function UserDetailPage(/* { params }: Props */) {
   const pathname = usePathname();
   const id = pathname.split("/")[2];
 

@@ -30,7 +30,7 @@ export default function PostDetailPage() {
 
   const {
     data: comments,
-    isLoading: isLoadingComments,
+    /*  isLoading: isLoadingComments, not needed */
     isError: isErrorComments,
     error: errorComments,
   } = useQuery({
@@ -40,8 +40,8 @@ export default function PostDetailPage() {
   });
   const {
     data: users,
-    isLoading: loadingUsers,
-    isError: errorUsers,
+    /* isLoading: loadingUsers,
+    isError: errorUsers, not needed*/
   } = useQuery({
     queryKey: ["users"],
     queryFn: getUsers,
@@ -70,7 +70,7 @@ export default function PostDetailPage() {
     if (comments) {
       setLocalComments(comments);
     }
-  }, [comments]);
+  }, [comments, post, users]); // missing dependencies posts and users
 
   const handleAddComment = () => {
     const newCommentObj = {

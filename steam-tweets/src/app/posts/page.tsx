@@ -13,13 +13,17 @@ import {
   PaginationPrevious,
   PaginationNext,
 } from "@/components/ui/pagination";
-import { getGameName } from "@/lib/helper/getGameName";
+/* import { getGameName } from "@/lib/helper/getGameName"; no needed*/
 import { useSearchParams } from "next/navigation";
 import { Post } from "@/lib/types/globals";
 
-interface Props {
+/* interface Props {
   searchParams: { [key: string]: string | string[] | undefined };
-}
+} */
+
+/*
+page props not needed in client component 
+*/
 
 const itemsPerPage = 10;
 
@@ -27,8 +31,14 @@ export default function PostsPage() {
   const searchParams = useSearchParams();
   const page = searchParams.get("page");
   const currentPage = page ? Number(page) : 1;
+  /*
   const [allPosts, setAllPosts] = useState<any[]>([]);
-  const [gameName, setGameName] = useState<string>(getGameName());
+  explicity any type
+  */
+  const [allPosts, setAllPosts] = useState<Post[]>([]);
+  /*  const [gameName, setGameName] = useState<string>(getGameName()); 
+ not used in this component
+ */
   const [sortOrder, setSortOrder] = useState<string>("asc");
   const [filterText, setFilterText] = useState<string>("");
   const { data, isLoading, isError, error } = useQuery({
@@ -38,20 +48,30 @@ export default function PostsPage() {
 
   useEffect(() => {
     if (data) {
-      setAllPosts((prevPosts) => {
+      setAllPosts(
+        data /* (prevPosts) => {
         const newPosts = [...prevPosts];
         newPosts[currentPage - 1] = data;
-        return newPosts;
-      });
+        return newPosts;  nol logic needed
+      } */
+      );
     }
   }, [data, currentPage]);
 
   const totalPosts = 100;
   const totalPages = Math.ceil(totalPosts / itemsPerPage);
 
-  const posts: Post[] = allPosts[currentPage - 1] || [];
+  /*  const posts: Post[] = allPosts[currentPage - 1] || []; 
+ not needed
+ */
 
-  const filteredPosts = posts.filter((post: Post) =>
+  /*  const filteredPosts = posts.filter((post: Post) =>
+    post.title.toLowerCase().includes(filterText.toLowerCase())
+  );
+  was using a wrong variable
+  */
+
+  const filteredPosts = allPosts?.filter((post: Post) =>
     post.title.toLowerCase().includes(filterText.toLowerCase())
   );
 

@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { Post } from "./types/globals";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -8,7 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 export const getPosts = async (
   pageSize: number,
   page: number
-): Promise<any> => {
+): /* Promise<any> explicit any */ Promise<Post[]> => {
   const startIndex = (page - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   const response = await fetch(`https://jsonplaceholder.typicode.com/posts`);
@@ -22,7 +23,9 @@ export const getPosts = async (
   return pagedResults;
 };
 
-export const getPostById = async (id: number): Promise<any> => {
+export const getPostById = async (
+  id: number
+): /* Promise<any>  explicit any */ Promise<Post> => {
   const response = await fetch(
     `https://jsonplaceholder.typicode.com/posts/${id}`
   );
@@ -32,7 +35,9 @@ export const getPostById = async (id: number): Promise<any> => {
   return response.json();
 };
 
-export const getCommentsByPostId = async (postId: number): Promise<any> => {
+export const getCommentsByPostId = async (
+  postId: number
+) /* Promise<any> explicit any*/ => {
   const response = await fetch(
     `https://jsonplaceholder.typicode.com/posts/${postId}/comments`
   );
