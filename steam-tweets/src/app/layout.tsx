@@ -13,19 +13,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
+interface RootLayoutProps {
   children: React.ReactNode;
-}>) {
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body>
         <TanstackProvider>
           <Header />
-
           {children}
-
           <Footer />
         </TanstackProvider>
       </body>
